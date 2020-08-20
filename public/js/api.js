@@ -167,34 +167,32 @@ const getClubById = () =>{
 const getFavoriteClub=()=>{
     getAll().then(club=>{
         console.log(club);
-        let clubHTML = "";
-        if (club === undefined || club.length == 0) {
-            clubHTML = `<h1 class="center">tidak ada club tersimpan</h1>`;
-        } else {
-           club.forEach(club=>{
-            clubHTML += `
-            <style>
-                .card-image {
-                    padding: 10px;
-                }
-            </style>
-            <div class="col s12 m6">
-            <div class="card">
-                <a href="./club.html?id=${club.id}&saved=true">
-                    <div class="card-image">
-                        <img src="${club.crestUrl}" height="128px" width="128px" alt="logo club">
-                    </div>
-                </a>
-                <div class="card-content">
-                    <span class="card-title center">${club.name}</span>
-                </div>
-            </div>
-            </div>
-            `;
-        });
-        }
-        
-        document.getElementById("saved-clubs").innerHTML = clubHTML;
+       let teamHTML = "";
+            if (club === undefined || club.length == 0) {
+                teamHTML = `<h2 class="center">tidak ada club tersimpan</h2> `;
+            } else {
+                club.forEach(club=>{
+                    teamHTML += `
+                        <style>
+                            .card-image {
+                                padding: 10px;
+                            }
+                        </style>
+                        <div class="col s12 m6">
+                            <div class="card">
+                                <a href="./club.html?id=${club.id}&saved=true">
+                                <div class="card-image">
+                                    <img src="${club.crestUrl}" height="128px" width="128px" alt="logo club">
+                                </div>
+                                </a>
+                                <div class="card-content">
+                                    <span class="card-title center">${club.name}</span>
+                                </div>
+                            </div>
+                        </div>`;
+                });
+            }
+            document.getElementById("saved-clubs").innerHTML = teamHTML;
     })
 }
 

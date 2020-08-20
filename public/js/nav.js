@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             }
         };
-        xhttp.open("GET", "nav.html", true);
+        xhttp.open("GET", "/nav.html", true);
         xhttp.send();
     }
     // load page content
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
           };
-          xhttp.open("GET", "pages/" + page + ".html", true);
+          xhttp.open("GET", "/pages/" + page + ".html", true);
           xhttp.send();
     }
 });
