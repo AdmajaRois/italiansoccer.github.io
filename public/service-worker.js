@@ -8,28 +8,36 @@ if (workbox) {
 
 workbox.precaching.precacheAndRoute([
     {url: '/index.html', revision: '1'},
-    {url: '/club.html', revision: '1'},
+    {url: '/club.html', revision: '2'},
     {url: '/nav.html', revision: '1'},
-    {url: '/main.js', revision: '1'},
+    {url: '/main.js', revision: '2'},
     {url: '/manifest.json', revision: '1'},
     {url: '/push.js', revision: '1'},
     {url: '/img/icon_192.png', revision: '1'},
     {url: '/img/icon_512.png', revision: '1'},
     {url: '/img/maskable_icon.png', revision: '1'},
-    {url: '/js/api.js', revision: '1'},
+    {url: '/js/api.js', revision: '2'},
     {url: '/js/app.js', revision: '1'},
     {url: '/js/db.js', revision: '1'},
     {url: '/js/idb.js', revision: '1'},
     {url: '/js/nav.js', revision: '1'},
     {url: '/materialize/css/materialize.min.css', revision: '1'},
     {url: '/materialize/js/materialize.min.js', revision: '1'},
-])
+],{
+    ignoreUrlParametersMatching: [/.*/]
+});
+
 
 workbox.routing.registerRoute(
     new RegExp('/pages/'),
     workbox.strategies.staleWhileRevalidate({
         cacheName: 'pages'
     })
+)
+
+workbox.routing.registerRoute(
+    '/\.(?:png|gif|jpg|jpeg|svg)$/',
+    workbox.strategies.cacheFirst()
 )
 
 workbox.routing.registerRoute(

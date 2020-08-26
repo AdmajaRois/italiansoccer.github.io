@@ -32,15 +32,6 @@ const requestData =(url, onComplete)=>{
     .catch(error)
 }
 
-const getCache = (url, onComplete)=>{
-    caches.match(url).then(response=>{
-        if (response) {
-            response.json()
-            .then(onComplete);
-        }
-    })
-}
-
 const generateUrl = (path) =>{
     const url = `${base_url}${path}`;
     return url
@@ -48,17 +39,11 @@ const generateUrl = (path) =>{
 
 const getStandings = () =>{
     const url = generateUrl(`competitions/2019/standings`);
-    if ('caches' in window) {
-        getCache(url, renderStandings);
-    }
     requestData(url, renderStandings);
 }
 
 const getMatch = () =>{
     const url = generateUrl(`competitions/2019/matches`);
-    if ('caches' in window) {
-        getCache(url, renderMatches);
-    }
     requestData(url, renderMatches);
 }
 
@@ -66,48 +51,6 @@ const getClubById = () =>{
     return new Promise((resolve, reject)=>{
         let urlParams = new URLSearchParams(window.location.search);
         let idParam = urlParams.get("id");
-        
-        if ("caches" in window) {
-            caches.match(`${base_url}teams/${idParam}`).then(response=>{
-            if (response) {
-                response.json().then(data=>{
-                    let clubHTML = `
-                        <style>
-                            .card-image {
-                                padding: 10px;
-                            }
-                        </style>
-                        <div class="card">
-                            <div class="card-image waves-effect waves-block waves-light">
-                                <img src="${data.crestUrl.replace(/^http:\/\//i, 'https://')}" />
-                            </div>
-                            <div class="card-content">
-                                <span class="card-title center">${data.name}</span>
-                                <p>Address  : ${data.address}</P>
-                                <p>Phone    : ${data.phone}</p>
-                                <p>Website  : ${data.website}</p>
-                                <p>Email    : ${data.email}</p>
-                                <p>Vanue    : ${data.venue}</p>
-                            </div>
-                        </div>`;
-                    let squadHTML = "";
-                        data.squad.forEach(squad=>{
-                            squadHTML += `
-                                <div class="card">
-                                    <div class="card-content">
-                                        <span class="card-title center">${squad.name}</span>
-                                        <p>Position     : ${(squad.position === null) ? squad.role : squad.position}</p>
-                                        <p>Nationality  : ${squad.nationality}</p>
-                                    </div>
-                                </div>`;
-                        });
-                    document.getElementById("club-info").innerHTML = clubHTML;
-                    document.getElementById("squad").innerHTML = squadHTML;
-                    resolve(data);
-                });
-                }
-            });
-        } 
                    
         fetch(`${base_url}teams/${idParam}`,{
                         method:"GET",

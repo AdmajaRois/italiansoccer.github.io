@@ -77,13 +77,14 @@
         });
       }
 
-      deleteBtn.onclick = () =>{
-        console.log("tombol hapus diklik");
+      deleteBtn.onclick =() =>{
         item.then(club=>{
           deleteClub(club);
           M.toast({html: club.name + " dihapus dari daftar favorit"})
         });
-        window.location.href = "/index.html#saved";
+        setTimeout(() => {
+          window.location.href = "/index.html#saved";
+        }, 500);
       }
     });
   </script>
